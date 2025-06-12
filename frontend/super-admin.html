@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break and Play - Super Administrateur</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- En-tête du tableau de bord -->
+        <header class="dashboard-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="user-details">
+                    <h2 id="userName">Keran</h2>
+                    <div class="user-role">Super Administrateur</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btnAjouterClient" class="btn-header btn-ajouter">
+                    <i class="fas fa-user-plus"></i>
+                    Ajouter Client
+                </button>
+                <button id="btnOuvrirModalAjoutAdmin" class="btn-header btn-ajouter">
+                    <i class="fas fa-user-tie"></i>
+                    Ajouter Admin
+                </button>
+                <button id="btnOuvrirModalAjoutEmploye" class="btn-header btn-ajouter">
+                    <i class="fas fa-user-check"></i>
+                    Ajouter Employé
+                </button>
+                <button id="btnImporter" class="btn-header btn-import">
+                    <i class="fas fa-upload"></i>
+                    Importer
+                </button>
+                <input type="file" id="importFileInput" accept=".xlsx, .xls, .csv" style="display: none;">
+                <button id="btnExporter" class="btn-header btn-export">
+                    <i class="fas fa-download"></i>
+                    Exporter
+                </button>
+                <button id="btnDeconnexion" class="btn-header btn-deconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Contenu principal -->
+        <main class="dashboard-main">
+            <!-- Statistiques -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Statistiques Générales
+                    </h3>
+                    <button id="btnActualiserStats" class="btn-header">
+                        <i class="fas fa-sync-alt"></i>
+                        Actualiser
+                    </button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalClients" style="color: var(--primary-color);">0</div>
+                        <div class="stat-label">Total Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="clientsPayes" style="color: var(--success-color);">0</div>
+                        <div class="stat-label">Clients Payés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="clientsEntres" style="color: var(--accent-color);">0</div>
+                        <div class="stat-label">Clients Entrés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="clientsEnAttente" style="color: var(--warning-color);">0</div>
+                        <div class="stat-label">En Attente</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Liste des clients -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-users"></i>
+                        Gestion des Clients
+                    </h3>
+                    <div class="filter-bar">
+                        <div class="filter-group">
+                            <label>Statut</label>
+                            <select id="filtreStatut">
+                                <option value="">Tous</option>
+                                <option value="paye">Payés</option>
+                                <option value="non_paye">Non payés</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Entrée</label>
+                            <select id="filtreEntree">
+                                <option value="">Tous</option>
+                                <option value="entre">Entrés</option>
+                                <option value="en_attente">En attente</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Rechercher</label>
+                            <input type="text" id="rechercheClient" placeholder="Nom, prénom...">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Statut Paiement</th>
+                                <th>Entrée</th>
+                                <th>Ajouté par</th>
+                                <th>Date d'ajout</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listeClients">
+                            <tr>
+                                <td colspan="9" class="empty-state">
+                                    <i class="fas fa-users"></i>
+                                    <h3>Aucun client enregistré</h3>
+                                    <p>Commencez par ajouter des clients à votre événement</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Gestion des utilisateurs -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-users-cog"></i>
+                        Gestion des Utilisateurs
+                    </h3>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Rôle</th>
+                                <th>Date de création</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listeUtilisateurs">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    <i class="fas fa-user-cog"></i>
+                                    <h3>Chargement des utilisateurs...</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Journal des activités -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Journal des Activités
+                    </h3>
+                    <button id="btnActualiserLogs" class="btn-header">
+                        <i class="fas fa-sync-alt"></i>
+                        Actualiser
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date/Heure</th>
+                                <th>Utilisateur</th>
+                                <th>Action</th>
+                                <th>Détails</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listeLogs">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    <i class="fas fa-history"></i>
+                                    <h3>Chargement du journal...</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modales -->
+    
+    <!-- Modal ajout client -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="clientModalTitle"><i class="fas fa-user-plus"></i> Ajouter un Client</h3>
+                <button class="close" data-modal="clientModal">&times;</button>
+            </div>
+            <form id="clientForm" class="modal-form">
+                <div class="form-group">
+                    <label for="clientNom"><i class="fas fa-user"></i> Nom *</label>
+                    <input type="text" id="clientNom" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientPrenom"><i class="fas fa-user"></i> Prénom *</label>
+                    <input type="text" id="clientPrenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="clientEmail">
+                </div>
+                <div class="form-group">
+                    <label for="clientTelephone"><i class="fas fa-phone"></i> Téléphone</label>
+                    <input type="tel" id="clientTelephone">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary btn-cancel" data-modal="clientModal">Annuler</button>
+                    <button type="submit" class="btn btn-primary btn-submit">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal ajout utilisateur -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="userModalTitle"><i class="fas fa-user-plus"></i> Ajouter un Utilisateur</h3>
+                <button class="close" data-modal="userModal">&times;</button>
+            </div>
+            <form id="userForm" class="modal-form">
+                <div class="form-group">
+                    <label for="newUserNameInput"><i class="fas fa-user"></i> Nom d'utilisateur *</label>
+                    <input type="text" id="newUserNameInput" required>
+                </div>
+                <div class="form-group">
+                    <label for="newUserPasswordInput"><i class="fas fa-lock"></i> Mot de passe *</label>
+                    <input type="password" id="newUserPasswordInput" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary btn-cancel" data-modal="userModal">Annuler</button>
+                    <button type="submit" class="btn btn-primary btn-submit">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/super-admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break and Play - Employé</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/employe.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- En-tête du tableau de bord -->
+        <header class="dashboard-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="user-details">
+                    <h2 id="userName">Employé</h2>
+                    <div class="user-role">Employé - Validation des entrées</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btnActualiser" class="btn-header">
+                    <i class="fas fa-sync-alt"></i>
+                    Actualiser
+                </button>
+                <button id="btnDeconnexion" class="btn-header btn-deconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Contenu principal -->
+        <main class="dashboard-main">
+            <!-- Statistiques rapides -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        État de l'événement
+                    </h3>
+                </div>
+                <div class="stats-grid-simple">
+                    <div class="stat-card-simple">
+                        <div class="stat-icon" style="color: var(--primary-color);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalClients">0</div>
+                            <div class="stat-label">Clients payés</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-simple">
+                        <div class="stat-icon" style="color: var(--success-color);">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="clientsEntres">0</div>
+                            <div class="stat-label">Déjà entrés</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-simple">
+                        <div class="stat-icon" style="color: var(--warning-color);">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="clientsEnAttente">0</div>
+                            <div class="stat-label">En attente</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Liste des clients en attente -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-clipboard-check"></i>
+                        Validation des entrées
+                    </h3>
+                    <div class="search-bar">
+                        <input type="text" id="rechercheClient" placeholder="Rechercher un client...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning" style="margin-bottom: var(--spacing-lg);">
+                    <i class="fas fa-info-circle"></i>
+                    Cliquez sur "OK" pour valider l'entrée d'un client. Une fois validé, le client ne pourra plus être traité.
+                </div>
+
+                <div id="listeClientsContainer" class="clients-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h3>Chargement des clients...</h3>
+                        <p>Veuillez patienter</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clients déjà entrés (pour référence) -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Clients entrés récemment
+                    </h3>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Heure d'entrée</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listeClientsEntres">
+                            <tr>
+                                <td colspan="3" class="empty-state">
+                                    <i class="fas fa-history"></i>
+                                    <h3>Aucune entrée validée</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de confirmation -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmer l'entrée</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h4 id="confirmationNom">Nom du client</h4>
+                    <p>Confirmer l'entrée de ce client ?</p>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Cette action est irréversible
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-cancel">Annuler</button>
+                <button type="button" id="btnConfirmerEntree" class="btn btn-submit">
+                    <i class="fas fa-check"></i>
+                    Confirmer l'entrée
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/employe.js"></script>
+</body>
+</html>

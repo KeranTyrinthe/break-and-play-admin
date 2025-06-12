@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break and Play - Connexion</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/login.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-music party-icon"></i>
+                    <h1>Break and Play</h1>
+                    <i class="fas fa-cocktail party-icon"></i>
+                </div>
+                <p class="subtitle">Plateforme de gestion d'événements</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="nom">
+                        <i class="fas fa-user"></i>
+                        Nom d'utilisateur
+                    </label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="motDePasse">
+                        <i class="fas fa-lock"></i>
+                        Mot de passe
+                    </label>
+                    <input type="password" id="motDePasse" name="motDePasse" required>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Se connecter
+                </button>
+            </form>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <!-- Section pour le super admin -->
+            <div id="superAdminSection" class="super-admin-section" style="display: none;">
+                <div class="admin-actions">
+                    <h3><i class="fas fa-crown"></i> Actions Super Administrateur</h3>
+                    <div class="action-buttons">
+                        <button id="btnAjouterAdmin" class="btn-action btn-admin">
+                            <i class="fas fa-user-tie"></i>
+                            Ajouter un Administrateur
+                        </button>
+                        <button id="btnAjouterEmploye" class="btn-action btn-employe">
+                            <i class="fas fa-user-check"></i>
+                            Ajouter un Employé
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Particules décoratives -->
+        <div class="particles">
+            <i class="fas fa-star particle"></i>
+            <i class="fas fa-heart particle"></i>
+            <i class="fas fa-music particle"></i>
+            <i class="fas fa-gift particle"></i>
+            <i class="fas fa-cocktail particle"></i>
+            <i class="fas fa-balloon particle"></i>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter un utilisateur -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-user-plus"></i> Ajouter un Utilisateur</h3>
+                <button class="close">&times;</button>
+            </div>
+            <form id="userForm" class="modal-form">
+                <input type="hidden" id="userRole" name="role">
+                
+                <div class="form-group">
+                    <label for="userName">
+                        <i class="fas fa-user"></i>
+                        Nom d'utilisateur
+                    </label>
+                    <input type="text" id="userName" name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="userPassword">
+                        <i class="fas fa-lock"></i>
+                        Mot de passe
+                    </label>
+                    <input type="password" id="userPassword" name="motDePasse" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary btn-cancel">Annuler</button>
+                    <button type="submit" class="btn btn-primary btn-submit">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

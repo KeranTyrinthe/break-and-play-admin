@@ -1,0 +1,7 @@
+node_modules
+.env
+
+# Fichiers de base de données
+*.db
+*.sqlite
+*.sqlite3
