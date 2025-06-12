@@ -2,7 +2,7 @@
 
 class BreakAndPlayAPI {
     constructor() {
-        this.baseUrl = '/api';
+        this.baseUrl = 'https://break-and-play-admin.onrender.com/api';
         this.token = localStorage.getItem('token');
     }
 
