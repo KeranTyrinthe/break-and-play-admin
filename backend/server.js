@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const JWT_SECRET = 'break_and_play_secret_key_2025';
+const PORT = process.env.PORT || 10000;
+const JWT_SECRET = process.env.JWT_SECRET || 'break_and_play_secret_key_2025';
 
 // Middleware
 app.use(cors());
@@ -54,10 +54,12 @@ db.serialize(() => {
         FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id)
     )`);
 
-    // Création du super administrateur par défaut
-    const motDePasseHache = bcrypt.hashSync('admin123', 10);
+    // Création des super administrateurs par défaut
+    const defaultPassword = bcrypt.hashSync('admin123', 10);
     db.run(`INSERT OR IGNORE INTO utilisateurs (nom, mot_de_passe, role) VALUES (?, ?, ?)`, 
-        ['Keran', motDePasseHache, 'super_admin']);
+        ['Keran', defaultPassword, 'super_admin']);
+    db.run(`INSERT OR IGNORE INTO utilisateurs (nom, mot_de_passe, role) VALUES (?, ?, ?)`, 
+        ['Dominique', defaultPassword, 'super_admin']);
 });
 
 // Middleware d'authentification
