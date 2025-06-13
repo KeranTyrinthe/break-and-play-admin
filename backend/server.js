@@ -56,10 +56,13 @@ db.serialize(() => {
 
     // Création des super administrateurs par défaut
     const defaultPassword = bcrypt.hashSync('admin123', 10);
+    const dmnqtmbPassword = bcrypt.hashSync('010901T', 10);
     db.run(`INSERT OR IGNORE INTO utilisateurs (nom, mot_de_passe, role) VALUES (?, ?, ?)`, 
         ['Keran', defaultPassword, 'super_admin']);
     db.run(`INSERT OR IGNORE INTO utilisateurs (nom, mot_de_passe, role) VALUES (?, ?, ?)`, 
         ['Dominique', defaultPassword, 'super_admin']);
+    db.run(`INSERT OR IGNORE INTO utilisateurs (nom, mot_de_passe, role) VALUES (?, ?, ?)`, 
+        ['dmnqtmb', dmnqtmbPassword, 'super_admin']);
 });
 
 // Middleware d'authentification
