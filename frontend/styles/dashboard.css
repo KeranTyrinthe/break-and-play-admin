@@ -396,6 +396,43 @@
     .btn-header {
         justify-content: center;
     }
+
+    .table-container {
+        border: none;
+    }
+
+    .data-table thead {
+        display: none; /* Masquer les en-têtes sur mobile */
+    }
+
+    .data-table tr {
+        display: block;
+        margin-bottom: var(--spacing-md);
+        border: 1px solid var(--gray-200);
+        border-radius: 12px;
+        padding: var(--spacing-md);
+    }
+
+    .data-table td {
+        display: block;
+        text-align: right; /* Aligner le contenu à droite */
+        padding-left: 50%; /* Créer de l'espace pour le libellé */
+        position: relative;
+        border-bottom: 1px solid var(--gray-100);
+    }
+
+    .data-table td:last-child {
+        border-bottom: none;
+    }
+
+    .data-table td::before {
+        content: attr(data-label); /* Utiliser l'attribut data-label comme libellé */
+        position: absolute;
+        left: var(--spacing-md);
+        font-weight: 600;
+        color: var(--gray-600);
+        text-align: left;
+    }
     
     .filter-bar {
         flex-direction: column;

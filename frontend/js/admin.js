@@ -152,21 +152,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tbody.innerHTML = clientsAffiches.map(client => `
             <tr>
-                <td>${client.nom}</td>
-                <td>${client.prenom}</td>
-                <td>${client.email || '-'}</td>
-                <td>${client.telephone || '-'}</td>
-                <td>
+                <td data-label="Nom">${client.nom}</td>
+                <td data-label="Prénom">${client.prenom}</td>
+                <td data-label="Email">${client.email || '-'}</td>
+                <td data-label="Téléphone">${client.telephone || '-'}</td>
+                <td data-label="Statut">
                     <span class="badge ${client.statut_paiement === 'paye' ? 'badge-paye' : 'badge-non-paye'}">
                         ${client.statut_paiement === 'paye' ? 'Payé' : 'Non payé'}
                     </span>
                 </td>
-                <td>
+                <td data-label="Entrée">
                     <span class="badge ${client.est_entre ? 'badge-entre' : 'badge-en-attente'}">
                         ${client.est_entre ? `Entré le ${formaterDate(client.heure_entree)}` : 'En attente'}
                     </span>
                 </td>
-                <td>${formaterDate(client.cree_le)}</td>
+                <td data-label="Créé le">${formaterDate(client.cree_le)}</td>
             </tr>
         `).join('');
     }

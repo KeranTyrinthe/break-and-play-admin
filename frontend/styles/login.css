@@ -322,4 +322,30 @@
     .form-actions {
         flex-direction: column;
     }
+
+    .btn-action {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: var(--spacing-lg);
+    }
+
+    .logo h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .subtitle {
+        font-size: var(--font-size-base);
+    }
+
+    .btn-login {
+        font-size: var(--font-size-base);
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
 }

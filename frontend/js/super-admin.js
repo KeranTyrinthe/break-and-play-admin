@@ -220,23 +220,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tbody.innerHTML = clientsAffiches.map(client => `
             <tr>
-                <td>${client.nom}</td>
-                <td>${client.prenom}</td>
-                <td>${client.email || '-'}</td>
-                <td>${client.telephone || '-'}</td>
-                <td>
+                <td data-label="Nom">${client.nom}</td>
+                <td data-label="Prénom">${client.prenom}</td>
+                <td data-label="Email">${client.email || '-'}</td>
+                <td data-label="Téléphone">${client.telephone || '-'}</td>
+                <td data-label="Statut">
                     <span class="badge ${client.statut_paiement === 'paye' ? 'badge-paye' : 'badge-non-paye'}">
                         ${client.statut_paiement === 'paye' ? 'Payé' : 'Non payé'}
                     </span>
                 </td>
-                <td>
+                <td data-label="Entrée">
                     <span class="badge ${client.est_entre ? 'badge-entre' : 'badge-en-attente'}">
                         ${client.est_entre ? `Entré le ${formaterDate(client.heure_entree)}` : 'En attente'}
                     </span>
                 </td>
-                <td>${client.ajoute_par_nom || 'Système'}</td>
-                <td>${formaterDate(client.cree_le)}</td>
-                <td>
+                <td data-label="Ajouté par">${client.ajoute_par_nom || 'Système'}</td>
+                <td data-label="Créé le">${formaterDate(client.cree_le)}</td>
+                <td data-label="Actions">
                     <button class="btn-table btn-supprimer" onclick="supprimerClient(${client.id})">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -263,14 +263,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tbody.innerHTML = utilisateursAffiches.map(utilisateur => `
             <tr>
-                <td>${utilisateur.nom}</td>
-                <td>
+                <td data-label="Nom">${utilisateur.nom}</td>
+                <td data-label="Rôle">
                     <span class="badge ${obtenirClasseBadgeRole(utilisateur.role)}">
                         ${formaterRole(utilisateur.role)}
                     </span>
                 </td>
-                <td>${formaterDate(utilisateur.cree_le)}</td>
-                <td>
+                <td data-label="Créé le">${formaterDate(utilisateur.cree_le)}</td>
+                <td data-label="Actions">
                     ${utilisateur.id !== utilisateurConnecte.id ? `
                         <button class="btn-table btn-supprimer" onclick="supprimerUtilisateur(${utilisateur.id}, '${utilisateur.nom}')">
                             <i class="fas fa-trash"></i>
@@ -298,14 +298,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tbody.innerHTML = logsAffiches.map(log => `
             <tr>
-                <td>${formaterDate(log.horodatage)}</td>
-                <td>${log.utilisateur_nom || 'Système'}</td>
-                <td>
+                <td data-label="Date">${formaterDate(log.horodatage)}</td>
+                <td data-label="Utilisateur">${log.utilisateur_nom || 'Système'}</td>
+                <td data-label="Action">
                     <span class="badge ${obtenirClasseBadgeAction(log.action)}">
                         ${formaterAction(log.action)}
                     </span>
                 </td>
-                <td>${log.details || '-'}</td>
+                <td data-label="Détails">${log.details || '-'}</td>
             </tr>
         `).join('');
     }

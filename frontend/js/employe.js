@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         listeClientsEntresTbody.innerHTML = clients.map(client => `
             <tr>
-                <td>${escapeHtml(client.nom)}</td>
-                <td>${escapeHtml(client.prenom)}</td>
-                <td><span class="badge badge-entre-recent">${formaterDate(client.heure_entree)}</span></td>
+                <td data-label="Nom">${escapeHtml(client.nom)}</td>
+                <td data-label="Prénom">${escapeHtml(client.prenom)}</td>
+                <td data-label="Heure d'entrée"><span class="badge badge-entre-recent">${formaterDate(client.heure_entree)}</span></td>
             </tr>`).join('');
     }
 
